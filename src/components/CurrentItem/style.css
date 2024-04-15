@@ -1,0 +1,22 @@
+.product {
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product__entites {
+    
+    display: flex;
+    gap: 15px;
+}
+
+
+@media screen and (max-width:600px) {
+    .product__entites {
+        flex-direction: column;
+    }
+}

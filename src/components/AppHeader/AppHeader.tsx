@@ -9,22 +9,21 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useTypeSelector } from "../../store/hooks/useTypeSelector";
-import './style.css'
+import "./style.css";
+import { useNavigate } from "react-router";
 
-
-export const AppHeader:React.FC = () => {
-
-  const cart = useTypeSelector((state) => state.cart.cart)
+export const AppHeader: React.FC = () => {
+  const cart = useTypeSelector((state) => state.cart.cart);
+  const navigate = useNavigate()
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <AdbIcon sx={{ display: { md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -34,51 +33,18 @@ export const AppHeader:React.FC = () => {
               color: "inherit",
               textDecoration: "none",
             }}
+            onClick={()=>navigate('/')}
           >
-            StoreAndroid
+            Online Store
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          ></Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-           
-              <Button
-              
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-               Shopping cart <span className="cart__counter">{cart.length}</span>
-              </Button>
-          
+        
+          <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
+            <Button sx={{ my: 2, color: "white", display: "block" }} onClick={()=>navigate('/cart')}>
+              Shopping cart <span className="cart__counter">{cart.length}</span>
+            </Button>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
-

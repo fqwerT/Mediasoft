@@ -11,7 +11,7 @@ interface FetchedProps {
   title: string;
 }
 export const useFirstMountFetch = (url: string) => {
-  const [fetched, setFetched] = useState<null | FetchedProps[]>(null);
+  const [fetched, setFetched] = useState<any>(null);
   const isfirstMounted = useRef(true);
 
   useMemo(() => {
