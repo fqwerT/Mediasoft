@@ -42,6 +42,7 @@ export const CurrentItem: React.FC = () => {
                 variant="outlined"
                 startIcon={add ? <DeleteIcon /> : <AddShoppingCartIcon />}
                 onClick={() => handleSwitchCart()}
+                sx={{ marginTop: "10px" }}
               >
                 {add ? " - Remove from cart" : `${product.price}$ Add to cart`}
               </Button>

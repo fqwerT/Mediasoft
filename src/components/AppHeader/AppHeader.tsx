@@ -11,7 +11,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useTypeSelector } from "../../store/hooks/useTypeSelector";
 import "./style.css";
 import { useNavigate } from "react-router";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 export const AppHeader: React.FC = () => {
   const cart = useTypeSelector((state) => state.cart.cart);
   const navigate = useNavigate();
@@ -21,19 +21,22 @@ export const AppHeader: React.FC = () => {
   }, [cart]);
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon
-            sx={{ display: { md: "flex" }, mr: 1 }}
-            onClick={() => navigate("/")}
-          />
+      <Container
+        maxWidth="xl"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {/* <Toolbar disableGutters> */}
+        <Box>
           <Typography
             variant="h6"
             noWrap
             component="a"
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
@@ -43,18 +46,20 @@ export const AppHeader: React.FC = () => {
             }}
             onClick={() => navigate("/")}
           >
-            Online Store
+            <AdbIcon onClick={() => navigate("/")} /> Online Store
           </Typography>
+        </Box>
 
-          <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
-            <Button
-              sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/cart")}
-            >
-              Shopping cart <span className="cart__counter">{cart.length}</span>
-            </Button>
-          </Box>
-        </Toolbar>
+        <Box>
+          <Button
+            sx={{ my: 2, color: "white", display: "block" }}
+            onClick={() => navigate("/cart")}
+          >
+            <ShoppingCartIcon />
+            <span className="cart__counter">{cart.length}</span>
+          </Button>
+        </Box>
+        {/* </Toolbar> */}
       </Container>
     </AppBar>
   );

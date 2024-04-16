@@ -14,6 +14,7 @@ import { deleteFromCart, handleManageCart } from "./utils";
 import { shallowEqual } from "react-redux";
 import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 interface CardProps {
   item: FetchedProps;
   type: string;
@@ -42,6 +43,7 @@ export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
   const handleItemPage = () => {
     navigate(`/item/${item.id}`);
   };
+  console.log("render");
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea onClick={(e) => handleItemPage()}>

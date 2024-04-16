@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTypeSelector } from "../../store/hooks/useTypeSelector";
-import { shallowEqual } from "react-redux";
+import { shallowEqual, useDispatch } from "react-redux";
 import { Products } from "../Products/Products";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import "./style.css";
 import { calculateTotalPrice } from "./utils";
+import { PAY } from "../../store/ActionTypes";
 
 export const Cart: React.FC = () => {
+  const dispatch = useDispatch();
   const cart = useTypeSelector((state) => state.cart.cart, shallowEqual);
-  const [cartSource, setCartSource] = useState<any>();
-  const firstMount = useRef(true);
   const totalPrice = useMemo(() => {
     if (cart.length !== 0) {
       return calculateTotalPrice(cart);
@@ -25,7 +25,15 @@ export const Cart: React.FC = () => {
         ) : (
           <>
             <Products items={cart} type={"cart"} />
-            <Typography variant="h6">total price - {totalPrice}$</Typography>
+            <Typography variant="h6" sx={{ fontWeight: "400" }}>
+              total price - <span className="cart__price">{totalPrice}$</span>{" "}
+              <Button
+                variant="outlined"
+                onClick={() => dispatch({ type: PAY })}
+              >
+                Pay
+              </Button>
+            </Typography>
           </>
         )}
       </>
