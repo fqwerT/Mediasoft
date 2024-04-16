@@ -13,7 +13,7 @@ const checkDuplicates = (array: FetchedProps[], item: FetchedProps) => {
   return value;
 };
 
-export const handleAddCart = (
+export const handleManageCart = (
   dispatch: Dispatch,
   setState: any,
   state: boolean,
@@ -28,4 +28,8 @@ export const handleAddCart = (
   if (state === true) {
     dispatch({ type: DELETE_ITEM, payload: item.id });
   }
+};
+
+export const deleteFromCart = (item: FetchedProps, dispatch: Dispatch) => {
+  dispatch({ type: DELETE_ITEM, payload: item.id });
 };

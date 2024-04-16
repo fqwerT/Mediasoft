@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,60 +10,70 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { FetchedProps } from "../../interface & types/interface";
 import { useDispatch } from "react-redux";
 import { useTypeSelector } from "../../store/hooks/useTypeSelector";
-import { handleAddCart } from "./utils";
+import { deleteFromCart, handleManageCart } from "./utils";
 import { shallowEqual } from "react-redux";
 import { useNavigate } from "react-router";
+import DeleteIcon from "@mui/icons-material/Delete";
 interface CardProps {
-  // title: string;
-  // value: string;
-  // src: string;
-  // price: string | number;
   item: FetchedProps;
   type: string;
 }
 
-export const ItemCard: React.FC<CardProps> = memo(
-  ({item, type }) => {
-    const dispatch = useDispatch();
-    const [add, setAdd] = useState<boolean>(false);
-    const cart = useTypeSelector((state) => state.cart.cart, shallowEqual);
-    const navigate = useNavigate()
-    const handleAddToCart = useCallback(
-      (item: FetchedProps) => {
-        handleAddCart(dispatch, setAdd, add, item, cart);
-      },
-      [cart, add, cart]
-    );
+export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
+  const dispatch = useDispatch();
+  const [add, setAdd] = useState<boolean>(false);
+  const cart = useTypeSelector((state) => state.cart.cart, shallowEqual);
+  const navigate = useNavigate();
+  const handleControllCart = useCallback(
+    (item: FetchedProps) => {
+      handleManageCart(dispatch, setAdd, add, item, cart);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    },
 
-    const handleItemPage = () => {
-  
-      navigate(`/item/${item.id}`)
-    }
-    return (
-      <Card sx={{ maxWidth: 345 }} >
-        <CardActionArea onClick={(e)=> handleItemPage()}>
-          <CardMedia component="img" height="300" image={item.image} alt="img" />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        {type === "cart" ? (
-          <></>
-        ) : (
-          <Button
-            variant="outlined"
-            startIcon={<AddShoppingCartIcon />}
-            onClick={() => handleAddToCart(item)}
-          >
-            {add ? " - Remove from cart" : `${item.price}$ Add to cart`}
-          </Button>
-        )}
-      </Card>
-    );
-  }
-);
+    [cart, add, cart]
+  );
+
+  const handleDeleteCart = useCallback(
+    (item: FetchedProps) => {
+      deleteFromCart(item, dispatch);
+    },
+    [cart]
+  );
+
+  const handleItemPage = () => {
+    navigate(`/item/${item.id}`);
+  };
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea onClick={(e) => handleItemPage()}>
+        <CardMedia component="img" height="300" image={item.image} alt="img" />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {item.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      {type === "cart" ? (
+        <Button
+          variant="outlined"
+          startIcon={<DeleteIcon />}
+          color="error"
+          onClick={() => handleDeleteCart(item)}
+        >
+          - Remove from cart
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          startIcon={add ? <DeleteIcon /> : <AddShoppingCartIcon />}
+          onClick={() => handleControllCart(item)}
+        >
+          {add ? " - Remove from cart" : `${item.price}$ Add to cart`}
+        </Button>
+      )}
+    </Card>
+  );
+});

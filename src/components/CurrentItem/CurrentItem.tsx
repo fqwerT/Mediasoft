@@ -15,10 +15,9 @@ export const CurrentItem: React.FC = () => {
         <div className="product__entites">
           <ItemCard item={product} type={"home"} />
           <div>
-          <Rating name="read-only" value={product.rating.rate} readOnly />
-          <Typography>Rating {product.rating.rate}</Typography>
+            <Rating name="read-only" value={product.rating.rate} readOnly />
+            <Typography>Rating {product.rating.rate}</Typography>
           </div>
-         
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +14,11 @@ import { useNavigate } from "react-router";
 
 export const AppHeader: React.FC = () => {
   const cart = useTypeSelector((state) => state.cart.cart);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const savedCart = useMemo(() => {
+    return JSON.parse(localStorage.getItem("cart") as string);
+  }, [cart]);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -33,13 +37,16 @@ export const AppHeader: React.FC = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-            onClick={()=>navigate('/')}
+            onClick={() => navigate("/")}
           >
             Online Store
           </Typography>
-        
+
           <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
-            <Button sx={{ my: 2, color: "white", display: "block" }} onClick={()=>navigate('/cart')}>
+            <Button
+              sx={{ my: 2, color: "white", display: "block" }}
+              onClick={() => navigate("/cart")}
+            >
               Shopping cart <span className="cart__counter">{cart.length}</span>
             </Button>
           </Box>
