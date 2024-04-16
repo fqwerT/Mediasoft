@@ -20,8 +20,14 @@ export const Cart: React.FC = () => {
   return (
     <div className="cart">
       <>
-        <Products items={cart} type={"cart"} />
-        <Typography variant="h6">total price - {totalPrice}$</Typography>
+        {cart.length <= 0 ? (
+          <Typography variant="h3">cart is emptily</Typography>
+        ) : (
+          <>
+            <Products items={cart} type={"cart"} />
+            <Typography variant="h6">total price - {totalPrice}$</Typography>
+          </>
+        )}
       </>
     </div>
   );
