@@ -23,7 +23,10 @@ export const AppHeader: React.FC = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { md: "flex" }, mr: 1 }} />
+          <AdbIcon
+            sx={{ display: { md: "flex" }, mr: 1 }}
+            onClick={() => navigate("/")}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -36,6 +39,7 @@ export const AppHeader: React.FC = () => {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
             onClick={() => navigate("/")}
           >

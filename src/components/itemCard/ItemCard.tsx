@@ -27,7 +27,6 @@ export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
   const handleControllCart = useCallback(
     (item: FetchedProps) => {
       handleManageCart(dispatch, setAdd, add, item, cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
     },
 
     [cart, add, cart]
@@ -48,15 +47,20 @@ export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
       <CardActionArea onClick={(e) => handleItemPage()}>
         <CardMedia component="img" height="300" image={item.image} alt="img" />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {item.description}
-          </Typography>
+          {type !== "page" && (
+            <Typography gutterBottom variant="h5" component="div">
+              {item.title}
+            </Typography>
+          )}
+
+          {type !== "page" && (
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
-      {type === "cart" ? (
+      {type === "cart" && (
         <Button
           variant="outlined"
           startIcon={<DeleteIcon />}
@@ -65,7 +69,9 @@ export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
         >
           - Remove from cart
         </Button>
-      ) : (
+      )}
+
+      {type === "home" && (
         <Button
           variant="outlined"
           startIcon={add ? <DeleteIcon /> : <AddShoppingCartIcon />}
