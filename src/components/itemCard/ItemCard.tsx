@@ -45,9 +45,26 @@ export const ItemCard: React.FC<CardProps> = memo(({ item, type }) => {
   };
   console.log("render");
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea onClick={(e) => handleItemPage()}>
-        <CardMedia component="img" height="300" image={item.image} alt="img" />
+    <Card
+      sx={{
+        width: 300,
+        height: "100%",
+
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+      }}
+    >
+      <CardActionArea
+        onClick={(e) => handleItemPage()}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
+        }}
+      >
+        <CardMedia component="img" image={item.image} alt="img" />
         <CardContent>
           {type !== "page" && (
             <Typography gutterBottom variant="h5" component="div">

@@ -21,7 +21,6 @@ export const ProductsList: React.FC = () => {
   return (
     <div className="home">
       <Products items={items} type={"home"} />
-
       <Stepper
         activeStep={checkCurrentStep}
         alternativeLabel

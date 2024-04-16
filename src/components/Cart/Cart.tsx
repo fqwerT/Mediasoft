@@ -24,7 +24,6 @@ export const Cart: React.FC = () => {
           <Typography variant="h3">cart is emptily</Typography>
         ) : (
           <>
-            <Products items={cart} type={"cart"} />
             <Typography variant="h6" sx={{ fontWeight: "400" }}>
               total price - <span className="cart__price">{totalPrice}$</span>{" "}
               <Button
@@ -34,6 +33,7 @@ export const Cart: React.FC = () => {
                 Pay
               </Button>
             </Typography>
+            <Products items={cart} type={"cart"} />
           </>
         )}
       </>
